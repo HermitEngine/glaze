@@ -203,12 +203,12 @@ namespace glz
             if constexpr (Opts.layout == rowwise) {
                for_each<N>([&](auto I) {
                   using Element = glaze_tuple_element<I, N, T>;
-                  static constexpr size_t member_index = Element::member_index;
+                  static constexpr size_t member_index = glaze_tuple_element<I, N, T>::member_index;
 
-                  using item_type = std::decay_t<typename Element::type>;
+                  using item_type = std::decay_t<typename glaze_tuple_element<I, N, T>::type>;
                   using value_type = typename item_type::value_type;
 
-                  static constexpr sv key = key_name<I, T, Element::use_reflection>;
+                  static constexpr sv key = key_name<I, T, glaze_tuple_element<I, N, T>::use_reflection>;
 
                   decltype(auto) mem = [&] {
                      if constexpr (reflectable<T>) {
